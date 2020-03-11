@@ -4,7 +4,7 @@ import (
 	ini "gopkg.in/ini.v1"
 )
 
-func parseConfigurationFile(f string) (*Configuration, error) {
+func parseConfigurationFile(f string) (Configuration, error) {
 	var config Configuration
 	var err error
 
@@ -13,16 +13,16 @@ func parseConfigurationFile(f string) (*Configuration, error) {
 	}, f)
 
 	if err != nil {
-		return nil, err
+		return config, err
 	}
 
 	src, err := cfg.GetSection("source")
 	if err != nil {
-		return nil, err
+		return config, err
 	}
 	err = src.MapTo(&config.Source)
 	if err != nil {
-		return nil, err
+		return config, err
 	}
 
 	if config.Source.Password != "" {
@@ -32,17 +32,17 @@ func parseConfigurationFile(f string) (*Configuration, error) {
 	if config.Source.ClientID == "" {
 		config.Source.ClientID, err = generateClientID()
 		if err != nil {
-			return nil, err
+			return config, err
 		}
 	}
 
 	dst, err := cfg.GetSection("destination")
 	if err != nil {
-		return nil, err
+		return config, err
 	}
 	err = dst.MapTo(&config.Destination)
 	if err != nil {
-		return nil, err
+		return config, err
 	}
 
 	if config.Destination.Password != "" {
@@ -52,9 +52,9 @@ func parseConfigurationFile(f string) (*Configuration, error) {
 	if config.Destination.ClientID == "" {
 		config.Destination.ClientID, err = generateClientID()
 		if err != nil {
-			return nil, err
+			return config, err
 		}
 	}
 
-	return &config, nil
+	return config, nil
 }

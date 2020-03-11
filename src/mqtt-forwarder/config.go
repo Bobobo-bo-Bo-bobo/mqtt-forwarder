@@ -6,6 +6,7 @@ import (
 
 // Configuration - Configuration data
 type Configuration struct {
+	Quiet       bool
 	Source      MQTTConfiguration
 	Destination MQTTConfiguration
 }

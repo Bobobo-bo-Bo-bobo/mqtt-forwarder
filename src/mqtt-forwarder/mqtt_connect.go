@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 )
 
-func mqttConnect(cfg *MQTTConfiguration) mqtt.Client {
+func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 	var tlsCfg = new(tls.Config)
 
 	mqttOptions := mqtt.NewClientOptions()
@@ -66,19 +66,23 @@ func mqttConnect(cfg *MQTTConfiguration) mqtt.Client {
 
 	mqttClient := mqtt.NewClient(mqttOptions)
 
-	log.WithFields(log.Fields{
-		"server":                 cfg.URL,
-		"user":                   cfg.User,
-		"password":               cfg.password,
-		"client_certificate":     cfg.ClientCertificate,
-		"client_certificate_key": cfg.ClientKey,
-		"client_id":              cfg.ClientID,
-		"ca_cert":                cfg.CACertificate,
-		"qos":                    cfg.QoS,
-	}).Info(formatLogString("Connecting to MQTT message broker"))
+	if !quiet {
+		log.WithFields(log.Fields{
+			"server":                 cfg.URL,
+			"user":                   cfg.User,
+			"password":               cfg.password,
+			"client_certificate":     cfg.ClientCertificate,
+			"client_certificate_key": cfg.ClientKey,
+			"client_id":              cfg.ClientID,
+			"ca_cert":                cfg.CACertificate,
+			"qos":                    cfg.QoS,
+			"topic":                  cfg.Topic,
+		}).Info(formatLogString("Connecting to MQTT message broker"))
+	}
 
 	mqttToken := mqttClient.Connect()
 	mqttToken.Wait()
+
 	if mqttToken.Error() != nil {
 		log.WithFields(log.Fields{
 			"error":                  mqttToken.Error(),
@@ -90,6 +94,7 @@ func mqttConnect(cfg *MQTTConfiguration) mqtt.Client {
 			"client_id":              cfg.ClientID,
 			"ca_cert":                cfg.CACertificate,
 			"qos":                    cfg.QoS,
+			"topic":                  cfg.Topic,
 		}).Fatal(formatLogString("Connection to MQTT message broker failed"))
 	}
 
