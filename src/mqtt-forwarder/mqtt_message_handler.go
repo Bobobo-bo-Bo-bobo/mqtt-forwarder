@@ -10,7 +10,7 @@ func mqttMessageHandler(c mqtt.Client, msg mqtt.Message) {
 	var destTopic string
 	var token mqtt.Token
 
-	if configuration.Quiet {
+	if !configuration.Quiet {
 		log.WithFields(log.Fields{
 			"topic":      msg.Topic(),
 			"duplicate":  msg.Duplicate(),
@@ -37,7 +37,7 @@ func mqttMessageHandler(c mqtt.Client, msg mqtt.Message) {
 			"error":      token.Error(),
 		}).Error(formatLogString("MQTT message forwarding to destination MQTT broker failed"))
 	} else {
-		if configuration.Quiet {
+		if !configuration.Quiet {
 			log.WithFields(log.Fields{
 				"topic":      destTopic,
 				"duplicate":  msg.Duplicate(),
