@@ -23,5 +23,6 @@ type MQTTConfiguration struct {
 	Topic             string `ini:"topic"`
 	ClientID          string `ini:"client_id"`
 	QoS               uint   `ini:"qos"`
+	InsecureSSL       bool   `ini:"insecure_ssl"`
 	mqttClient        mqtt.Client
 }

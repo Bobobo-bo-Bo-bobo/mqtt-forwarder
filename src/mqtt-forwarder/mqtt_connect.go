@@ -40,6 +40,10 @@ func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 		}).Fatal(formatLogString("Unable to determine authentication method"))
 	}
 
+	if cfg.InsecureSSL {
+		tlsCfg.InsecureSkipVerify = true
+	}
+
 	if cfg.CACertificate != "" {
 		tlsCfg.RootCAs = x509.NewCertPool()
 		cacert, err := ioutil.ReadFile(cfg.CACertificate)
@@ -77,6 +81,7 @@ func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 			"ca_cert":                cfg.CACertificate,
 			"qos":                    cfg.QoS,
 			"topic":                  cfg.Topic,
+			"insecure_ssl":           cfg.InsecureSSL,
 		}).Info(formatLogString("Connecting to MQTT message broker"))
 	}
 
@@ -95,6 +100,7 @@ func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 			"ca_cert":                cfg.CACertificate,
 			"qos":                    cfg.QoS,
 			"topic":                  cfg.Topic,
+			"insecure_ssl":           cfg.InsecureSSL,
 		}).Fatal(formatLogString("Connection to MQTT message broker failed"))
 	}
 
