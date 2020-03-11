@@ -10,9 +10,6 @@ func validateConfiguration(cfg Configuration) error {
 		return fmt.Errorf("Topic of source MQTT broker is not set")
 	}
 
-	if cfg.Destination.Topic == "" {
-		return fmt.Errorf("Topic of destination MQTT broker is not set")
-	}
 	if strings.Index(cfg.Destination.Topic, "+") != -1 || strings.Index(cfg.Destination.Topic, "#") != -1 {
 		return fmt.Errorf("Topic of destination MQTT broker can't contain MQTT wildcards")
 	}
