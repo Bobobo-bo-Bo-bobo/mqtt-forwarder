@@ -67,6 +67,7 @@ func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 	mqttOptions.SetAutoReconnect(true)
 	mqttOptions.SetConnectRetry(true)
 	mqttOptions.SetProtocolVersion(MQTTv3_1_1)
+	mqttOptions.SetConnectionLostHandler(mqttConnectionLostHandler)
 
 	mqttClient := mqtt.NewClient(mqttOptions)
 
