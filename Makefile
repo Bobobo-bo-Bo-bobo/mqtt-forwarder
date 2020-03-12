@@ -43,5 +43,5 @@ distclean:
 	/bin/rm -rf src/gopkg.in/
 
 .PHONY: all
-all: build strip install
+all: depend build strip install
 
