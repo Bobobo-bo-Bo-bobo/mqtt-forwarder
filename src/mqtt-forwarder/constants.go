@@ -1,7 +1,7 @@
 package main
 
 const name = "mqtt-forwarder"
-const version = "1.1.0-20200311"
+const version = "1.1.0"
 const _url = "https://git.ypbind.de/cgit/mqtt-forwarder/"
 const pkgname = name
 
