@@ -4,7 +4,7 @@ BINDIR	= $(CURDIR)/bin
 PROGRAMS = mqtt-forwarder
 
 .PHONY: build
-build:
+build: depend
 	env GOPATH=$(GOPATH) go install $(PROGRAMS)
 
 .PHONY: destdirs
