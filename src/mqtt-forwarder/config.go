@@ -25,4 +25,5 @@ type MQTTConfiguration struct {
 	QoS               uint   `ini:"qos"`
 	InsecureSSL       bool   `ini:"insecure_ssl"`
 	mqttClient        mqtt.Client
+	Timeout           uint `ini:"timeout"`
 }

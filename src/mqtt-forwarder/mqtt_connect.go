@@ -6,6 +6,7 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"time"
 )
 
 func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
@@ -68,6 +69,7 @@ func mqttConnect(cfg *MQTTConfiguration, quiet bool) mqtt.Client {
 	mqttOptions.SetConnectRetry(true)
 	mqttOptions.SetProtocolVersion(MQTTv3_1_1)
 	mqttOptions.SetConnectionLostHandler(mqttConnectionLostHandler)
+	mqttOptions.SetConnectTimeout(time.Duration(cfg.Timeout) * time.Second)
 
 	mqttClient := mqtt.NewClient(mqttOptions)
 

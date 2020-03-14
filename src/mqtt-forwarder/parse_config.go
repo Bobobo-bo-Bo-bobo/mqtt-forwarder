@@ -36,6 +36,10 @@ func parseConfigurationFile(f string) (Configuration, error) {
 		}
 	}
 
+	if config.Source.Timeout == 0 {
+		config.Source.Timeout = 30
+	}
+
 	dst, err := cfg.GetSection("destination")
 	if err != nil {
 		return config, err
@@ -54,6 +58,10 @@ func parseConfigurationFile(f string) (Configuration, error) {
 		if err != nil {
 			return config, err
 		}
+	}
+
+	if config.Destination.Timeout == 0 {
+		config.Destination.Timeout = 30
 	}
 
 	return config, nil
